@@ -8,28 +8,20 @@ body {
     background: linear-gradient(to bottom right, rgb(0, 0, 84), rgb(203, 0, 0));
 }
 
+
 h1 {
     color: rgb(230, 230, 230);
     font-size: 3rem;
     border: 2px solid rgb(230, 230, 230);
 }
 
-.botonEstilizado {
-    text-transform: uppercase;
-    color: black;
-    background-color: rgb(150, 147, 142);
-    display: flex;
+
+h2, h3 {
+    color: rgb(230, 230, 230);
 }
 
-.botonEstilizado:hover {
-    color: blanchedalmond;
-    background-color: rgb(44, 38, 38);
-}
-
-.imagenProducto {
-    width: 15rem;
-    height: 15rem;
-    object-fit: contain;
+#cajaProductos {
+    border-bottom: 2px solid rgb(230, 230, 230);
 }
 
 .card {
@@ -46,12 +38,10 @@ h1 {
     align-items: center;
 }
 
-h2 {
-    color: rgb(230, 230, 230);
-}
-
-#cajaProductos {
-    border-bottom: 2px solid rgb(230, 230, 230);
+.imagenProducto {
+    width: 15rem;
+    height: 15rem;
+    object-fit: contain;
 }
 
 .descripcionProducto {
@@ -60,4 +50,17 @@ h2 {
     display: flex;
     align-items: center;
 }
+
+.botonEstilizado {
+    text-transform: uppercase;
+    color: black;
+    background-color: rgb(150, 147, 142);
+    display: flex;
+}
+
+.botonEstilizado:hover {
+    color: blanchedalmond;
+    background-color: rgb(44, 38, 38);
+}
+
 

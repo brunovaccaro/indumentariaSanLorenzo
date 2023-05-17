@@ -28,7 +28,11 @@ const rompevientoAzul = new Prenda(16, "Rompeviento azul", 28000, "img/rompevien
 
 const productos = [buzoArqueroNaranja, buzoArqueroVerde, buzoEntrenamiento, buzoLiso, camisetaSuplente, camisetaTitular, camperaEntrenamiento, camperaSalida, camperonAzul, camperonNegro, musculosaAzul, musculosaRoja, pantalonLargo, remeraEntrenamiento, remeraPreMatch, rompevientoAzul];
 
-const carrito = [];
+let carrito = [];
+
+if (localStorage.getItem("carrito")) {
+  carrito = JSON.parse(localStorage.getItem("carrito"));
+}
 
 const cajaProductos = document.querySelector("#cajaProductos");
 
@@ -64,7 +68,8 @@ const agregarAlCarrito = (id) => {
     const producto = productos.find(producto => producto.id === id)
     carrito.push(producto);
   }
-  console.log(carrito)
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  calcularElTotal();
 }
 
 
@@ -91,22 +96,48 @@ const mostrarElCarrito = () => {
              <p class="fs-5">Precio: $${producto.precio}</p>
              <p class="fs-5">Cantidad: ${producto.cantidad}</p>
              <p class="fs-5 text-uppercase">total: $${total}</p>
-             <button class="btn botonEstilizado" id="eliminar${producto.id}>Eliminar Producto</button>
+             <button class="btn botonEstilizado" id="eliminar${producto.id}">Eliminar Producto</button>
          </div>
-      </div>`
+      </div>
+      `
 
     cajaCarrito.appendChild(tarjeta);
 
-    // const eliminar = document.querySelector(`#eliminar${producto.id}`);
-    // eliminar.addEventListener("click", () => {
-    //   eliminarProducto(producto.id);
-    // })
+    const eliminar = document.querySelector(`#eliminar${producto.id}`);
+    eliminar.addEventListener("click", () => {
+      eliminarProducto(producto.id);
+    })
   })
+  calcularElTotal();
 }
 
-// const eliminarProducto = (id) => {
-//   const productoEliminado = carrito.find(producto => producto.id === id);
-//   let idProducto = carrito.indexOf(productoEliminado);
-//   carrito.splice(idProducto, 1);
-//   mostrarElCarrito();
-// }
+const eliminarProducto = (id) => {
+  const productoEliminado = carrito.find(producto => producto.id === id);
+  let idProducto = carrito.indexOf(productoEliminado);
+  carrito.splice(idProducto, 1);
+  mostrarElCarrito();
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+const vaciarElCarrito = document.querySelector("#vaciarElCarrito");
+vaciarElCarrito.addEventListener("click", () => {
+  vaciarCarritoCompleto();
+});
+
+
+const vaciarCarritoCompleto = () => {
+  carrito = [];
+  localStorage.clear();
+  mostrarElCarrito();
+}
+
+const montoTotalDelCarrito = document.querySelector("#montoTotalDelCarrito");
+
+const calcularElTotal = () => {
+  let totalCompra = 0;
+  carrito.forEach(producto => {
+    totalCompra += producto.precio * producto.cantidad;
+  })
+  montoTotalDelCarrito.innerHTML = `$${totalCompra}`
+}
