@@ -51,7 +51,7 @@ h2 {
 }
 
 #cajaProductos {
-    border: 2px solid rgb(230, 230, 230);
+    border-bottom: 2px solid rgb(230, 230, 230);
 }
 
 .descripcionProducto {

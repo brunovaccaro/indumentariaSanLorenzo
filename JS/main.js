@@ -41,7 +41,7 @@ const mostrarProductos = () => {
          <img src="${producto.imagen}" alt="${producto.descripcion}" class=" mt-3  imagenProducto">
          <div class="cardText">
              <h4 class="text-uppercase descripcionProducto">${producto.descripcion}</h4>
-             <p class="fs-5">$${producto.precio}</p>
+             <p class="fs-5">Precio: $${producto.precio}</p>
              <button class="btn botonEstilizado" id="boton${producto.id}"  >Agregar al carrito</button>
          </div>
       </div>`
@@ -76,20 +76,37 @@ mostrarCarrito.addEventListener("click", () => {
 })
 
 const mostrarElCarrito = () => {
+  cajaCarrito.innerHTML = "";
   carrito.forEach(producto => {
     const tarjeta = document.createElement("div");
     tarjeta.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+
+    const total = producto.precio * producto.cantidad;
+
     tarjeta.innerHTML = `
       <div class="card m-2 p-1">
          <img src="${producto.imagen}" alt="${producto.descripcion}" class=" mt-3  imagenProducto">
          <div class="cardText">
              <h4 class="text-uppercase descripcionProducto">${producto.descripcion}</h4>
-             <p class="fs-5">$${producto.precio}</p>
-             <p class="fs-5">${producto.cantidad}</p>
-             <button class="btn botonEstilizado">Eliminar Producto</button>
+             <p class="fs-5">Precio: $${producto.precio}</p>
+             <p class="fs-5">Cantidad: ${producto.cantidad}</p>
+             <p class="fs-5 text-uppercase">total: $${total}</p>
+             <button class="btn botonEstilizado" id="eliminar${producto.id}>Eliminar Producto</button>
          </div>
       </div>`
 
     cajaCarrito.appendChild(tarjeta);
+
+    // const eliminar = document.querySelector(`#eliminar${producto.id}`);
+    // eliminar.addEventListener("click", () => {
+    //   eliminarProducto(producto.id);
+    // })
   })
 }
+
+// const eliminarProducto = (id) => {
+//   const productoEliminado = carrito.find(producto => producto.id === id);
+//   let idProducto = carrito.indexOf(productoEliminado);
+//   carrito.splice(idProducto, 1);
+//   mostrarElCarrito();
+// }
