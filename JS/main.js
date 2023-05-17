@@ -1,3 +1,4 @@
+
 class Prenda {
   constructor(id, descripcion, precio, imagen) {
     this.id = id;
@@ -30,11 +31,16 @@ const productos = [buzoArqueroNaranja, buzoArqueroVerde, buzoEntrenamiento, buzo
 
 let carrito = [];
 
+const cajaProductos = document.querySelector("#cajaProductos");
+const mostrarCarrito = document.querySelector("#mostrarCarrito");
+const cajaCarrito = document.querySelector("#cajaCarrito");
+const montoTotalDelCarrito = document.querySelector("#montoTotalDelCarrito");
+
+
 if (localStorage.getItem("carrito")) {
   carrito = JSON.parse(localStorage.getItem("carrito"));
 }
 
-const cajaProductos = document.querySelector("#cajaProductos");
 
 const mostrarProductos = () => {
   productos.forEach(producto => {
@@ -46,7 +52,7 @@ const mostrarProductos = () => {
          <div class="cardText">
              <h4 class="text-uppercase descripcionProducto">${producto.descripcion}</h4>
              <p class="fs-5">Precio: $${producto.precio}</p>
-             <button class="btn botonEstilizado" id="boton${producto.id}"  >Agregar al carrito</button>
+             <button class="btn botonEstilizado" id="boton${producto.id}">Agregar al carrito <i class="fas fa-shopping-cart"></i></button>
          </div>
       </div>`
     cajaProductos.appendChild(tarjeta);
@@ -73,8 +79,6 @@ const agregarAlCarrito = (id) => {
 }
 
 
-const mostrarCarrito = document.querySelector("#mostrarCarrito");
-const cajaCarrito = document.querySelector("#cajaCarrito");
 
 mostrarCarrito.addEventListener("click", () => {
   mostrarElCarrito();
@@ -132,7 +136,6 @@ const vaciarCarritoCompleto = () => {
   mostrarElCarrito();
 }
 
-const montoTotalDelCarrito = document.querySelector("#montoTotalDelCarrito");
 
 const calcularElTotal = () => {
   let totalCompra = 0;
