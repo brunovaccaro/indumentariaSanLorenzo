@@ -86,6 +86,11 @@ const mostrarElCarrito = () => {
   `;
   modalContainer.appendChild(modalHeader);
 
+  const cerrarCarrito = document.querySelector(".ModalHeaderBoton");
+  cerrarCarrito.addEventListener("click", () => {
+    modalContainer.style.display = "none";
+  })
+
   carrito.forEach(producto => {
     const totalPorProducto = producto.precio * producto.cantidad;
     const contenidoCarrito = document.createElement("div");
@@ -104,11 +109,6 @@ const mostrarElCarrito = () => {
     eliminar.addEventListener("click", () => {
       eliminarProducto(producto.id);
     });
-    
-    const cerrarCarrito = document.querySelector(".ModalHeaderBoton");
-    cerrarCarrito.addEventListener("click", () => {
-      modalContainer.style.display = "none";
-    })
 
     totalCompra += totalPorProducto;
   });
