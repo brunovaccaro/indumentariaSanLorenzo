@@ -1,32 +1,3 @@
-// CREO LA CLASE CONSTRUCTORA DE OBJETOS
-class Prenda {
-  constructor(id, descripcion, precio, imagen) {
-    this.id = id;
-    this.descripcion = descripcion;
-    this.precio = precio;
-    this.imagen = imagen;
-    this.cantidad = 1;
-  }
-}
-
-// CREO EL LISTADO DE PRODUCTOS
-const buzoArqueroNaranja = new Prenda(1, "Buzo arquero naranja", 25000, "img/buzoArqueroNaranja.png");
-const buzoArqueroVerde = new Prenda(2, "Buzo arquero verde", 25000, "img/buzoArqueroVerde.png");
-const buzoEntrenamiento = new Prenda(3, "Buzo de entrenamiento", 20000, "img/buzoEntrenamiento.jpg");
-const buzoLiso = new Prenda(4, "Buzo liso", 18000, "img/buzoLiso.png");
-const camisetaSuplente = new Prenda(5, "Camiseta suplente", 22000, "img/camisetaSuplente.jpg");
-const camisetaTitular = new Prenda(6, "Camiseta titular", 22000, "img/camisetaTitular.jpg");
-const camperaEntrenamiento = new Prenda(7, "Campera entrenamiento", 17000, "img/camperaEntrenamiento.png");
-const camperaSalida = new Prenda(8, "Campera salida", 15000, "img/camperaSalida.jpg");
-const camperonAzul = new Prenda(9, "Camperon azul", 40000, "img/camperonAzul.png");
-const camperonNegro = new Prenda(10, "Camperon negro", 42000, "img/camperonNegro.jpg");
-const musculosaAzul = new Prenda(11, "Musculosa azul", 15000, "img/musculosaAzul.png");
-const musculosaRoja = new Prenda(12, "Musculosa roja", 15000, "img/musculosaRoja.png");
-const pantalonLargo = new Prenda(13, "Pantalon largo", 19000, "img/pantalonLargo.jpg");
-const remeraEntrenamiento = new Prenda(14, "Remera entrenamiento", 11000, "img/remeraEntrenamiento.png");
-const remeraPreMatch = new Prenda(15, "Remera prematch", 13000, "img/remeraPreMatch.png");
-const rompevientoAzul = new Prenda(16, "Rompeviento azul", 28000, "img/rompevientoAzul.png");
-
 // INSERO ESOS PRODUCTOS EN UN ARRAY
 const productos = [buzoArqueroNaranja, buzoArqueroVerde, buzoEntrenamiento, buzoLiso, camisetaSuplente, camisetaTitular, camperaEntrenamiento, camperaSalida, camperonAzul, camperonNegro, musculosaAzul, musculosaRoja, pantalonLargo, remeraEntrenamiento, remeraPreMatch, rompevientoAzul];
 
@@ -38,6 +9,7 @@ const cajaProductos = document.querySelector("#cajaProductos");
 const mostrarCarrito = document.querySelector("#mostrarCarrito");
 const cajaCarrito = document.querySelector("#cajaCarrito");
 const montoTotalDelCarrito = document.querySelector("#montoTotalDelCarrito");
+const modalContainer = document.querySelector("#modalContainer");
 
 // SI HAY PRODUCTOS ALMACENADOS EN EL LOCAL STORAGE, LOS MUESTRO EN EL CARRITO, PARA QUE NO SE ELIMINEN CUANDO EL USUARIO CIERRA EL SITIO
 if (localStorage.getItem("carrito")) {
@@ -50,17 +22,17 @@ const mostrarProductos = () => {
   // ITERO SOBRE LOS PRODUCTOS, Y CREO LAS FILAS Y COLUMNAS UTILIZANDO EL SISTEMA BOOTSTRAP A TRAVES DEL AGREGADO DE CLASES. PREVIAMENTE CREO UN ELEMENTO CONTENEDOR EN EL HTML PARA CADA UNA DE LAS TARJETAS
   productos.forEach(producto => {
     const tarjeta = document.createElement("div");
-    tarjeta.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+    tarjeta.classList.add("col-xl-3", "col-md-6", "col-xs-12", "estiloTarjeta");
 
     // LUEGO, A TRAVES DEL DOM, CREO POR CADA UNO DE ESOS PRODUCTOS UNA TARJETA QUE SE UBICA EN LAS COLUMNAS CREADAS, DE MANERA QUE SI AGREGO O ELIMINO PRODUCTOS, AUTOMATICAMENTE SE ACTUALICE SIN NECESIDAD DE MODIFICAR EL HTML Y CSS, NI TAMPOCO EL JS (EXCEPTO POR EL AGREGADO POTENCIAL DE ALGUN PRODUCTO AL ARRAY DE PRODUCTOS)
     // PARA ELLO UTILIZO PLANTILLAS LITERALES HACIENDO MENCION DE CADA OBJETO Y SU PROPIEDAD SEGUN NECESIDAD, OPITIMIZANDO A FUTURO LA EXTENSION DEL CODIGO
     tarjeta.innerHTML = `
-      <div class="card m-2 p-1">
-         <img src="${producto.imagen}" alt="${producto.descripcion}" class=" mt-3  imagenProducto">
+      <div>
+         <img src="${producto.imagen}" alt="${producto.descripcion}" class="imagenProducto">
          <div class="cardText">
-             <h4 class="text-uppercase descripcionProducto">${producto.descripcion}</h4>
-             <p class="fs-5">Precio: $${producto.precio}</p>
-             <button class="btn botonEstilizado" id="boton${producto.id}">Agregar al carrito <i class="fas fa-shopping-cart"></i></button>
+             <h4 class="text-uppercase descripcionProducto fs-5">${producto.descripcion}</h4>
+             <p class="precio">Precio: $${producto.precio}</p>
+             <button class="botonEstilizado" id="boton${producto.id}">Agregar al carrito <i class="fas fa-shopping-cart"></i></button>
          </div>
       </div>`
 
@@ -99,54 +71,63 @@ mostrarCarrito.addEventListener("click", () => {
   mostrarElCarrito();
 })
 
+
 // CREO LA FUNCION QUE MUESTRA EL CARRITO
 const mostrarElCarrito = () => {
+  modalContainer.innerHTML = ""; // Limpiamos el contenido del modal
+  modalContainer.style.display = "Flex";
+  let totalCompra = 0;
 
-  // ANTES QUE NADA, LE INSERTO UN STRING VACIO PARA QUE CADA VEZ QUE OPRIMA EL BOTON PARA VISUALIRAR EL CARRITO, NO SE MULTIPLIQUE LA VISUALIZACION DEL MISMO SIN SENTIDO
-  cajaCarrito.innerHTML = "";
+  const modalHeader = document.createElement("div");
+  modalHeader.classList.add("modalHeader");
+  modalHeader.innerHTML = `
+    <h2 class="modalHeaderTitulo">Carrito</h2>
+    <h1 class="ModalHeaderBoton">X</h1>
+  `;
+  modalContainer.appendChild(modalHeader);
 
-  // ITERO SOBRE LOS PRODUCTOS, IGUAL QUE EN LA FUNCION ANTERIOR, LUEGO CREO UN ELEMENTO MEDIANTE EL DOM QUE CONTENGA CADA UNO DE LOS MISMOS A TRAVES DE BOOTSTRAP
   carrito.forEach(producto => {
-    const tarjeta = document.createElement("div");
-    tarjeta.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+    const totalPorProducto = producto.precio * producto.cantidad;
+    const contenidoCarrito = document.createElement("div");
+    contenidoCarrito.classList.add("modalContenido");
+    contenidoCarrito.innerHTML = `
+      <img src="${producto.imagen}">
+      <h3>${producto.descripcion}</h3>
+      <p>$${producto.precio}</p>
+      <p>Cantidad: ${producto.cantidad}</p>
+      <p>Total: $${totalPorProducto}</p>
+      <button id="eliminar${producto.id}" class="botonEstilizado">Eliminar Producto</button>
+    `;
+    modalContainer.appendChild(contenidoCarrito);
 
-    // CREO UNA CONSTANTE PARA CALCULAR EL TOTAL DE CADA PRODUCTO SEGUN LA CANTIDAD ELEGIDA DEL MISMO
-    const total = producto.precio * producto.cantidad;
-
-    tarjeta.innerHTML = `
-      <div class="card m-2 p-1">
-         <img src="${producto.imagen}" alt="${producto.descripcion}" class=" mt-3  imagenProducto">
-         <div class="cardText">
-             <h4 class="text-uppercase descripcionProducto">${producto.descripcion}</h4>
-             <p class="fs-5">Precio: $${producto.precio}</p>
-             <p class="fs-5">Cantidad: ${producto.cantidad}</p>
-             <p class="fs-5 text-uppercase">total: $${total}</p>
-             <button class="btn botonEstilizado" id="eliminar${producto.id}">Eliminar Producto</button>
-         </div>
-      </div>
-      `
-
-    // NUEVAMENTE LE INDICO AL CONTENEDOR DE CADA PRODCUTO DONDE DEBE UBICARSE EN EL HTML 
-    cajaCarrito.appendChild(tarjeta);
-
-    // CREO UN BOTON PARA ELIMINAR LOS PRODUCTOS, INVOCANDO UNA FUNCION QUE CREARÉ A CONTINUACION
     const eliminar = document.querySelector(`#eliminar${producto.id}`);
     eliminar.addEventListener("click", () => {
       eliminarProducto(producto.id);
+    });
+    
+    const cerrarCarrito = document.querySelector(".ModalHeaderBoton");
+    cerrarCarrito.addEventListener("click", () => {
+      modalContainer.style.display = "none";
     })
-  })
 
-  // INVOCO UNA FUNCION PARA CALCULAR EL TOTAL DEL CARRITO QUE CREARÉ MAS ADELANTE
-  calcularElTotal();
-}
+    totalCompra += totalPorProducto;
+  });
+
+  const modalFooter = document.createElement("div");
+  modalFooter.classList.add("modalFooter");
+  modalFooter.innerHTML = `<h3 class="modalFooter">El monto total de su compra es de: $${totalCompra}</h3>`;
+  modalContainer.appendChild(modalFooter);
+};
+
 
 // FUNCION QUE CALCULA EL TOTAL DE CADA PRODUCTO TENIENDO EN CUENTA SU VALOR Y LA CANTIDAD DE CADA UNO POR MEDIO DE UN METODO FOR EACH PARA ITERAR EN ELLOS Y DECIRLE QUE EL TOTAL SERA EL RESULTADO DEL PRECIO DEL MISMO POR LA CANTIDAD ELEGIDA
+
 const calcularElTotal = () => {
   let totalCompra = 0;
   carrito.forEach(producto => {
     totalCompra += producto.precio * producto.cantidad;
   })
-  montoTotalDelCarrito.innerHTML = `$${totalCompra}`
+  montoTotalDelCarrito.innerText = totalCompra;
 }
 
 // FUNCION PARA ELIMINAR PRODUCTO QUE FUNCIONA CON EL ID DEL PRODUCTO COMO PARAMETRO

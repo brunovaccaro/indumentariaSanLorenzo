@@ -6,6 +6,9 @@
 
 body {
     background: linear-gradient(to bottom right, rgb(0, 0, 84), rgb(203, 0, 0));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -35,11 +38,12 @@ h2, h3 {
 .cardText {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
 .imagenProducto {
-    width: 15rem;
+    width: 90%;
     height: 15rem;
     object-fit: contain;
 }
@@ -53,14 +57,119 @@ h2, h3 {
 
 .botonEstilizado {
     text-transform: uppercase;
-    color: black;
-    background-color: rgb(150, 147, 142);
-    display: flex;
+    color: rgb(176, 176, 176);
+    background-color: rgb(57, 56, 53);
+    border: none;
+    outline: 0;
+    padding: 5px 2rem;
+    text-align: center;
+    font-style: 18px;
 }
+
 
 .botonEstilizado:hover {
-    color: blanchedalmond;
-    background-color: rgb(44, 38, 38);
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+.estiloTarjeta {
+    background-color: rgb(169, 140, 137);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: 12px 5px;
+    padding: 8px;
+    text-align: center;
+    font-family: Arial;
 }
 
 
+.contenidoProductos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* margin-top: 30px;
+    margin-left: 80px;
+    margin-right: 80px; */
+}
+
+.precio {
+    color: rgb(12, 12, 12);
+    font-style: 22px;
+}
+
+.tituloCarrito {
+    display: inline;
+}
+
+
+.carritoEmoji {
+    text-transform: uppercase;
+    background-color: rgb(50, 45, 45);
+    border: none;
+    outline: 0;
+    margin: 6px;
+    padding: 8px;
+    border-radius: 15px;
+}
+
+.seccionCarrito {
+    display: inline-block
+}
+
+.modalContainer {
+    width: 75%;
+    margin: 0 10px;
+    max-height: 88vh;
+    color: #fefefe;
+    background-color: #413737;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    overflow: auto;
+    z-index: 9;
+    top: 12vh;
+    scrollbar-color: none;
+}
+
+.modalContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.modalHeaderTitulo {
+    justify-self: start;
+}
+
+.ModalHeaderBoton{
+    border: none;
+    cursor: pointer;
+}
+
+.ModalHeaderBoton:hover {
+    opacity: 0.8;
+    transition: .6s;
+}
+
+.modalContenido {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 120px;
+    width: 80%;
+    border: 2px solid grey;
+}
+
+.modalContainer div img {   
+    height: 120px;
+    width: 120px;
+}
+
+.vaciarElCarrito {
+    margin: 2px;
+    padding: 2px;
+}
