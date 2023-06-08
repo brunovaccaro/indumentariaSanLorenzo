@@ -121,7 +121,7 @@ h2, h3 {
     margin: 0 10px;
     max-height: 88vh;
     color: #fefefe;
-    background-color: #413737;
+    background-color: #595151;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -172,4 +172,8 @@ h2, h3 {
 .vaciarElCarrito {
     margin: 2px;
     padding: 2px;
+}
+
+.swal2-styled {
+    background-color: rgb(7, 7, 41) !important;
 }

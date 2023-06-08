@@ -42,6 +42,19 @@ const mostrarProductos = () => {
     // RELACIONO POR MEDIO DE UNA CONSTANTE LOCAL, EL BOTON DINAMICO PARA AGREGAR AL CARRITO CADA PRODUCTO
     const boton = document.querySelector(`#boton${producto.id}`);
     boton.addEventListener("click", () => {
+      Toastify({
+        text: "AGREGADO AL CARRITO",
+        duration: 2000,
+        close: false,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+        style: {
+          background: "linear-gradient(to bottom right, rgb(50, 0, 12), rgb(59, 56, 56))",
+          borderRadius: "15px",
+        },
+        onClick: function(){} // Callback after click
+      }).showToast();
       agregarAlCarrito(producto.id);
     })
   })
@@ -107,6 +120,19 @@ const mostrarElCarrito = () => {
 
     const eliminar = document.querySelector(`#eliminar${producto.id}`);
     eliminar.addEventListener("click", () => {
+      Toastify({
+        text: "PRODUCTO ELIMINADO",
+        duration: 2000,
+        close: false,
+        gravity: "top",
+        position: "right",
+        stopOnFocus: true,
+        style: {
+          background: "linear-gradient(to bottom right, rgb(106, 106, 114), rgb(75, 38, 38))",
+          borderRadius: "15px",
+        },
+        onClick: function(){} // Callback after click
+      }).showToast();
       eliminarProducto(producto.id);
     });
 
@@ -155,6 +181,15 @@ vaciarElCarrito.addEventListener("click", () => {
 
 // LA FUNCION DE VACIADO DEL CARRITO SE EJECUTA A TRAVES DE LA MODIFICACION DEL CONTENIDO DEL ARRAY DEL CARRITO, INGRESANDOLO VACIO
 const vaciarCarritoCompleto = () => {
+  Swal.fire({
+    title: 'Vaciado',
+    text: 'Tu carrito está vacío',
+    icon: 'success',
+    confirmButtonText: 'Aceptar',
+    iconColor: 'red'
+  })
+
+  
   carrito = [];
 
   // UTILIZO EL METODO CLEAR PARA LIMPIAR EL LOCAL STORAGE
