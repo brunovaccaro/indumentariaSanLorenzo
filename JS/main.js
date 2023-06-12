@@ -17,7 +17,7 @@ if (localStorage.getItem("carrito")) {
 // CREO LA FUNCION QUE MOSTRARÁ LOS PRODUCTOS EN LA PAGINA
 const mostrarProductos = () => {
   // A TRAVES DE FETCH TRAIGO EL LISTADO DE PRODUCTOS DESDE UN ARCHIVO LOCAL .JSON Y LUEGO ITERO SOBRE LOS MISMOS 
-  fetch("./productos.json")
+  fetch("./JS/productos.json")
     .then((res) => res.json())
     .then((data) => {
       data.forEach(producto => {
@@ -64,7 +64,7 @@ mostrarProductos()
 
 // AHORA CREO LA FUNCION PARA AGREGAR AL CARRITO LOS PRODUCTOS DESEADOS
 const agregarAlCarrito = (id) => {
-  fetch("./productos.json")
+  fetch("./JS/productos.json")
       .then((res) => res.json())
       .then((productos) => {
         // POR MEDIO DEL METODO FIND BUSCO SI EL PRODUCTO SELECCIONADO YA SE ENCUENTRA EN EL CARRITO O NO, PARA EVITAR LA DOBLE CARGA DEL MISMO, YA QUE EN CASO DE REPETIRSE, QUIERO QUE MUESTRE UN INCREMENTO EN SU CANTIDAD, PERO NO UNA DUPLICACION DE TARJETA. SI NO ESTA REPETIDO, ENTONCES SI LO AGREGO AL MISMO
