@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "descripcion": "Buzo arquero naranja",
+    "precio": 25000,
+    "imagen": "img/buzoArqueroNaranja.png",
+    "cantidad": 1
+  },
+  {
+    "id": 2,
+    "descripcion": "Buzo arquero verde",
+    "precio": 25000,
+    "imagen": "img/buzoArqueroVerde.png",
+    "cantidad": 1
+  },
+  {
+    "id": 3,
+    "descripcion": "Buzo de entrenamiento",
+    "precio": 20000,
+    "imagen": "img/buzoEntrenamiento.png",
+    "cantidad": 1
+  },
+  {
+    "id": 4,
+    "descripcion": "Buzo liso",
+    "precio": 18000,
+    "imagen": "img/buzoLiso.png",
+    "cantidad": 1
+  },
+  {
+    "id": 5,
+    "descripcion": "Camiseta suplente",
+    "precio": 22000,
+    "imagen": "img/camisetaSuplente.png",
+    "cantidad": 1
+  },
+  {
+    "id": 6,
+    "descripcion": "Camiseta titular",
+    "precio": 22000,
+    "imagen": "img/camisetaTitular.png",
+    "cantidad": 1
+  },
+  {
+    "id": 7,
+    "descripcion": "Campera entrenamiento",
+    "precio": 17000,
+    "imagen": "img/camperaEntrenamiento.png",
+    "cantidad": 1
+  },
+  {
+    "id": 8,
+    "descripcion": "Campera salida",
+    "precio": 15000,
+    "imagen": "img/camperaSalida.png",
+    "cantidad": 1
+  },
+  {
+    "id": 9,
+    "descripcion": "Camperon azul",
+    "precio": 40000,
+    "imagen": "img/camperonAzul.png",
+    "cantidad": 1
+  },
+  {
+    "id": 10,
+    "descripcion": "Camperon negro",
+    "precio": 42000,
+    "imagen": "img/camperonNegro.png",
+    "cantidad": 1
+  },
+  {
+    "id": 11,
+    "descripcion": "Musculosa azul",
+    "precio": 15000,
+    "imagen": "img/musculosaAzul.png",
+    "cantidad": 1
+  },
+  {
+    "id": 12,
+    "descripcion": "Musculosa roja",
+    "precio": 15000,
+    "imagen": "img/musculosaRoja.png",
+    "cantidad": 1
+  },
+  {
+    "id": 13,
+    "descripcion": "Pantalon largo",
+    "precio": 19000,
+    "imagen": "img/pantalonLargo.png",
+    "cantidad": 1
+  },
+  {
+    "id": 14,
+    "descripcion": "Remera entrenamiento",
+    "precio": 11000,
+    "imagen": "img/remeraEntrenamiento.png",
+    "cantidad": 1
+  },
+  {
+    "id": 15,
+    "descripcion": "Remera prematch",
+    "precio": 13000,
+    "imagen": "img/remeraPreMatch.png",
+    "cantidad": 1
+  },
+  {
+    "id": 16,
+    "descripcion": "Rompeviento azul",
+    "precio": 28000,
+    "imagen": "img/rompevientoAzul.png",
+    "cantidad": 1
+  }
+]

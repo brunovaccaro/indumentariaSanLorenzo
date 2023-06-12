@@ -1,5 +1,3 @@
-// INSERO ESOS PRODUCTOS EN UN ARRAY
-const productos = [buzoArqueroNaranja, buzoArqueroVerde, buzoEntrenamiento, buzoLiso, camisetaSuplente, camisetaTitular, camperaEntrenamiento, camperaSalida, camperonAzul, camperonNegro, musculosaAzul, musculosaRoja, pantalonLargo, remeraEntrenamiento, remeraPreMatch, rompevientoAzul];
 
 // CREO EL ARRAY DE PRODUCTOS VACIO PARA QUE EL USUARIO VAYA AGREGANDO ALLÍ LOS QUE DESEE
 let carrito = [];
@@ -18,46 +16,47 @@ if (localStorage.getItem("carrito")) {
 
 // CREO LA FUNCION QUE MOSTRARÁ LOS PRODUCTOS EN LA PAGINA
 const mostrarProductos = () => {
+  // A TRAVES DE FETCH TRAIGO EL LISTADO DE PRODUCTOS DESDE UN ARCHIVO LOCAL .JSON Y LUEGO ITERO SOBRE LOS MISMOS 
+  fetch("./JS/productos.json")
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach(producto => {
+        const tarjeta = document.createElement("div");
+        tarjeta.classList.add("col-xl-3", "col-md-6", "col-xs-12", "estiloTarjeta");
 
-  // ITERO SOBRE LOS PRODUCTOS, Y CREO LAS FILAS Y COLUMNAS UTILIZANDO EL SISTEMA BOOTSTRAP A TRAVES DEL AGREGADO DE CLASES. PREVIAMENTE CREO UN ELEMENTO CONTENEDOR EN EL HTML PARA CADA UNA DE LAS TARJETAS
-  productos.forEach(producto => {
-    const tarjeta = document.createElement("div");
-    tarjeta.classList.add("col-xl-3", "col-md-6", "col-xs-12", "estiloTarjeta");
-
-    // LUEGO, A TRAVES DEL DOM, CREO POR CADA UNO DE ESOS PRODUCTOS UNA TARJETA QUE SE UBICA EN LAS COLUMNAS CREADAS, DE MANERA QUE SI AGREGO O ELIMINO PRODUCTOS, AUTOMATICAMENTE SE ACTUALICE SIN NECESIDAD DE MODIFICAR EL HTML Y CSS, NI TAMPOCO EL JS (EXCEPTO POR EL AGREGADO POTENCIAL DE ALGUN PRODUCTO AL ARRAY DE PRODUCTOS)
-    // PARA ELLO UTILIZO PLANTILLAS LITERALES HACIENDO MENCION DE CADA OBJETO Y SU PROPIEDAD SEGUN NECESIDAD, OPITIMIZANDO A FUTURO LA EXTENSION DEL CODIGO
-    tarjeta.innerHTML = `
-      <div>
-         <img src="${producto.imagen}" alt="${producto.descripcion}" class="imagenProducto">
-         <div class="cardText">
-             <h4 class="text-uppercase descripcionProducto fs-5">${producto.descripcion}</h4>
-             <p class="precio">Precio: $${producto.precio}</p>
-             <button class="botonEstilizado" id="boton${producto.id}">Agregar al carrito <i class="fas fa-shopping-cart"></i></button>
-         </div>
-      </div>`
-
-    // A CONTINUACION, LE INDICO AL HTML DONDE SE VA A UBICAR ESE CONTENEDOR QUE CREE EN LA LINEA 52, QUE ES DENTRO DEL OTRO CONTENEDOR PRINCIPAL
-    cajaProductos.appendChild(tarjeta);
-
-    // RELACIONO POR MEDIO DE UNA CONSTANTE LOCAL, EL BOTON DINAMICO PARA AGREGAR AL CARRITO CADA PRODUCTO
-    const boton = document.querySelector(`#boton${producto.id}`);
-    boton.addEventListener("click", () => {
-      Toastify({
-        text: "AGREGADO AL CARRITO",
-        duration: 2000,
-        close: false,
-        gravity: "top",
-        position: "right",
-        stopOnFocus: true,
-        style: {
-          background: "linear-gradient(to bottom right, rgb(50, 0, 12), rgb(59, 56, 56))",
-          borderRadius: "15px",
-        },
-        onClick: function(){} // Callback after click
-      }).showToast();
-      agregarAlCarrito(producto.id);
+        // LUEGO, A TRAVES DEL DOM, CREO POR CADA UNO DE ESOS PRODUCTOS UNA TARJETA QUE SE UBICA EN LAS COLUMNAS CREADAS, DE MANERA QUE SI AGREGO O ELIMINO PRODUCTOS, AUTOMATICAMENTE SE ACTUALICE SIN NECESIDAD DE MODIFICAR EL HTML Y CSS, NI TAMPOCO EL JS (EXCEPTO POR EL AGREGADO POTENCIAL DE ALGUN PRODUCTO AL ARRAY DE PRODUCTOS)
+        // PARA ELLO UTILIZO PLANTILLAS LITERALES HACIENDO MENCION DE CADA OBJETO Y SU PROPIEDAD SEGUN NECESIDAD, OPITIMIZANDO A FUTURO LA EXTENSION DEL CODIGO
+        tarjeta.innerHTML = `
+        <img src="${producto.imagen}" alt="${producto.descripcion}" class="imagenProducto">
+                <div class="cardText">
+                    <h4 class="text-uppercase descripcionProducto fs-5">${producto.descripcion}</h4>
+                    <p class="precio">Precio: $${producto.precio}</p>
+                    <button class="botonEstilizado" id="boton${producto.id}">Agregar al carrito <i class="fas fa-shopping-cart"></i></button>
+                </div>
+                `
+        // A CONTINUACION, LE INDICO AL HTML DONDE SE VA A UBICAR ESE CONTENEDOR QUE CREE EN LA LINEA 52, QUE ES DENTRO DEL OTRO CONTENEDOR PRINCIPAL
+        cajaProductos.append(tarjeta)
+        
+        // RELACIONO POR MEDIO DE UNA CONSTANTE LOCAL, EL BOTON DINAMICO PARA AGREGAR AL CARRITO CADA PRODUCTO
+        const boton = document.querySelector(`#boton${producto.id}`);
+        boton.addEventListener("click", () => {
+          Toastify({
+            text: "AGREGADO AL CARRITO",
+            duration: 2000,
+            close: false,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+              background: "linear-gradient(to bottom right, rgb(50, 0, 12), rgb(59, 56, 56))",
+              borderRadius: "15px",
+            },
+            onClick: function () { } 
+          }).showToast();
+          agregarAlCarrito(producto.id);
+        })
+      })
     })
-  })
 }
 
 // INVOCO LA FUNCION PREVIA
@@ -65,18 +64,22 @@ mostrarProductos()
 
 // AHORA CREO LA FUNCION PARA AGREGAR AL CARRITO LOS PRODUCTOS DESEADOS
 const agregarAlCarrito = (id) => {
-  // POR MEDIO DEL METODO FIND BUSCO SI EL PRODUCTO SELECCIONADO YA SE ENCUENTRA EN EL CARRITO O NO, PARA EVITAR LA DOBLE CARGA DEL MISMO, YA QUE EN CASO DE REPETIRSE, QUIERO QUE MUESTRE UN INCREMENTO EN SU CANTIDAD, PERO NO UNA DUPLICACION DE TARJETA. SI NO ESTA REPETIDO, ENTONCES SI LO AGREGO AL MISMO
-  const productoEnCarrito = carrito.find(producto => producto.id === id);
-  if (productoEnCarrito) {
-    productoEnCarrito.cantidad++;
-  } else {
-    const producto = productos.find(producto => producto.id === id)
-    carrito.push(producto);
-  }
-
-  // GUARDO TODOS LOS ELEMENTOS DEL CARRITO EN EL LOCAL STORAGE
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  calcularElTotal();
+  fetch("./JS/productos.json")
+      .then((res) => res.json())
+      .then((productos) => {
+        // POR MEDIO DEL METODO FIND BUSCO SI EL PRODUCTO SELECCIONADO YA SE ENCUENTRA EN EL CARRITO O NO, PARA EVITAR LA DOBLE CARGA DEL MISMO, YA QUE EN CASO DE REPETIRSE, QUIERO QUE MUESTRE UN INCREMENTO EN SU CANTIDAD, PERO NO UNA DUPLICACION DE TARJETA. SI NO ESTA REPETIDO, ENTONCES SI LO AGREGO AL MISMO
+        const productoEnCarrito = carrito.find(producto => producto.id === id);
+        if (productoEnCarrito) {
+          productoEnCarrito.cantidad++;
+        } else {
+          const producto = productos.find(producto => producto.id === id)
+          carrito.push(producto);
+        }
+        
+        // GUARDO TODOS LOS ELEMENTOS DEL CARRITO EN EL LOCAL STORAGE
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        calcularElTotal();
+      })
 }
 
 // CREO EL EVENTO EN EL BOTON DE VER EL CARRITO, PARA QUE ESTE LO MUESTRE MEDIANTE LA SIGUIENTE FUNCION QUE VOY A CREAR
@@ -131,7 +134,7 @@ const mostrarElCarrito = () => {
           background: "linear-gradient(to bottom right, rgb(106, 106, 114), rgb(75, 38, 38))",
           borderRadius: "15px",
         },
-        onClick: function(){} // Callback after click
+        onClick: function () { } // Callback after click
       }).showToast();
       eliminarProducto(producto.id);
     });
@@ -189,7 +192,7 @@ const vaciarCarritoCompleto = () => {
     iconColor: 'red'
   })
 
-  
+
   carrito = [];
 
   // UTILIZO EL METODO CLEAR PARA LIMPIAR EL LOCAL STORAGE
