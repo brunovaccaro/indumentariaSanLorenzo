@@ -87,9 +87,6 @@ h2, h3 {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    /* margin-top: 30px;
-    margin-left: 80px;
-    margin-right: 80px; */
 }
 
 .precio {
